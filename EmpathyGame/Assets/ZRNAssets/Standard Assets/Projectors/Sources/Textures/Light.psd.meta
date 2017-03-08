@@ -46,7 +46,27 @@ TextureImporter:
   alphaIsTransparency: 0
   spriteTessellationDetail: -1
   textureType: 5
-  buildTargetSettings: []
+  buildTargetSettings:
+  - buildTarget: iPhone
+    maxTextureSize: 32
+    textureFormat: 3
+    compressionQuality: 50
+    allowsAlphaSplitting: 0
+  - buildTarget: Android
+    maxTextureSize: 32
+    textureFormat: 3
+    compressionQuality: 50
+    allowsAlphaSplitting: 0
+  - buildTarget: BlackBerry
+    maxTextureSize: 32
+    textureFormat: 3
+    compressionQuality: 50
+    allowsAlphaSplitting: 0
+  - buildTarget: WP8
+    maxTextureSize: 32
+    textureFormat: 3
+    compressionQuality: 50
+    allowsAlphaSplitting: 0
   spriteSheet:
     serializedVersion: 2
     sprites: []
