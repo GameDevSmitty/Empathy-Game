@@ -44,11 +44,11 @@ public class RisingPlane : MonoBehaviour {
         }
         if(player.transform.position.y <= transform.position.y)
         {
-           // lightSwitch.light.enabled = false;
+            //lightSwitch.light.enabled = false;
         }
         else
         {
-       //     lightSwitch.enabled = true;
+            //lightSwitch.enabled = true;
         }
 	}
 
@@ -66,7 +66,6 @@ public class RisingPlane : MonoBehaviour {
             //shark attack player
             //scary music play 
             //Play splash sound effects (Gurgles, gasps for air)
-            
         }
     }
 }

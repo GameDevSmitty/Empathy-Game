@@ -9,6 +9,8 @@ public class Enemy : MonoBehaviour {
 
     [SerializeField]
     GameObject player;
+    [SerializeField]
+    UnderwaterController playerScriptController;
 
     [SerializeField]
     float playerDistance;
@@ -22,7 +24,7 @@ public class Enemy : MonoBehaviour {
 
     float isMoving; 
 
-    public int sceneToStart = 2;
+    public int sceneToStart = 1;
 
 
     
@@ -45,18 +47,9 @@ public class Enemy : MonoBehaviour {
         //anim = GetComponent<Animator>();
         //animation = GetComponent<Animation>();
     }
-	
-	// Update is called once per frame
-	void Update () {
-        //playerMotion();
-        
 
-        playerDistance = Vector3.Distance(player.transform.position, transform.position);
-
-        if(transform.position.y == waterPlane.transform.position.y)
-        {
-            transform.position.y = waterPlane.transform.position.y - 1; 
-        }
+    void FixedUpdate()
+    {
         if (isDead == false && playerDistance > 30f)
         {
             //anim.Play("PA_WarriorIdle_Clip");
@@ -64,18 +57,31 @@ public class Enemy : MonoBehaviour {
         }
         if (isDead == false && playerDistance < 25f)
         {
-           lookAtPlayer();
-           enemyMotion();
+            lookAtPlayer();
+            enemyMotion();
             fireWeapon();
-         
+
         }
         if (isDead == true)
         {
-          movementSpeed = 0; 
-          //anim.Play("PA_WarriorDeath_Clip");
+            movementSpeed = 0;
+            //anim.Play("PA_WarriorDeath_Clip");
             //animation.Play("PA_WarriorDeath_Clip");
-        }       
+        }
+    }
+	
+	// Update is called once per frame
+	void Update () {
+        //playerMotion();
+        Vector3 belowWaterLine = new Vector3(transform.position.x, waterPlane.transform.position.y - 1f, transform.position.z);
+        
+        playerDistance = Vector3.Distance(player.transform.position, transform.position);
 
+        if(transform.position.y >= waterPlane.transform.position.y || transform.position.y < waterPlane.transform.position.y - 1)
+        {
+            transform.position = belowWaterLine; 
+        }
+     
 	}
 
     private void fireWeapon()
@@ -99,10 +105,10 @@ public class Enemy : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.name);
         if (other.gameObject.tag == "Player")
         {
-            player.SetActive(false);
-            SceneManager.LoadScene(sceneToStart);
+            playerScriptController.PlayerHitByEnemy();
         }
         if (other.gameObject.tag == "Projectile")
         {
@@ -115,7 +121,8 @@ public class Enemy : MonoBehaviour {
    
     private void enemyMotion()
     {
-        transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
+        if (transform.position.y <= waterPlane.transform.position.y)
+            transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
         //animation.Play("PA_WarriorForward_Clip");
         // if (isMoving == movementSpeed)
         // {
